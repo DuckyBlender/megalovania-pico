@@ -169,7 +169,7 @@ Note melody[] = {
 };
 
 // Calculate the total number of notes in the melody
-#define MELODY_LENGTH (sizeof(melody) / sizeof(melody[0]) / 2)
+#define MELODY_LENGTH (sizeof(melody) / sizeof(Note))
 
 // Helper function to convert HZ to sleep time in us
 #define hz_to_us(hz) (1000000 / hz)
