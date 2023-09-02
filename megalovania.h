@@ -95,71 +95,156 @@ Note melody_core0[] = {
     {"D4", NATURAL, QUARTER},
     {"F4", NATURAL, QUARTER},
     {"G4", NATURAL, QUARTER},
+
+    {"D4", NATURAL, QUARTER},
+    {"D4", NATURAL, QUARTER},
+    {"D5", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"A4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"P0", NATURAL, QUARTER}, // pause
+    {"G4", SHARP, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"F4", NATURAL, HALF},
+    {"D4", NATURAL, QUARTER},
+    {"F4", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
+
+    {"C4", NATURAL, QUARTER},
+    {"C4", NATURAL, QUARTER},
+    {"D5", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"A4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"P0", NATURAL, QUARTER}, // pause
+    {"G4", SHARP, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"F4", NATURAL, HALF},
+    {"D4", NATURAL, QUARTER},
+    {"F4", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
+
+    {"B3", NATURAL, QUARTER},
+    {"B3", NATURAL, QUARTER},
+    {"D5", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"A4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"P0", NATURAL, QUARTER}, // pause
+    {"G4", SHARP, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"F4", NATURAL, HALF},
+    {"D4", NATURAL, QUARTER},
+    {"F4", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
+
+    {"B3", FLAT, QUARTER},
+    {"B3", FLAT, QUARTER},
+    {"D5", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"A4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"P0", NATURAL, QUARTER}, // pause
+    {"G4", SHARP, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER},
+    {"F4", NATURAL, HALF},
+    {"D4", NATURAL, QUARTER},
+    {"F4", NATURAL, QUARTER},
+    {"G4", NATURAL, QUARTER},
 };
 
 // core 1
 Note melody_core1[] = {
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    {"P0", NATURAL, WHOLE},
+    // left starts
+
+    {"D3", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"D3", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
     {"D3", NATURAL, QUARTER},
     {"D3", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
+    {"D3", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
+    {"D3", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, HALF},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
+    {"D3", NATURAL, QUARTER},
+    {"D3", NATURAL, QUARTER},
+    {"D3", NATURAL, QUARTER},
+    {"D3", NATURAL, HALF},
 
+    {"C3", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"C3", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
     {"C3", NATURAL, QUARTER},
     {"C3", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
+    {"C3", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
+    {"C3", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, HALF},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
+    {"C3", NATURAL, QUARTER},
+    {"C3", NATURAL, QUARTER},
+    {"C3", NATURAL, QUARTER},
+    {"C3", NATURAL, HALF},
 
+    {"B2", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"B2", NATURAL, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
     {"B2", NATURAL, QUARTER},
     {"B2", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
+    {"B2", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
+    {"B2", NATURAL, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, HALF},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
+    {"B2", NATURAL, QUARTER},
+    {"B2", NATURAL, QUARTER},
+    {"B2", NATURAL, QUARTER},
+    {"B2", NATURAL, HALF},
 
     {"B2", FLAT, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"B2", FLAT, QUARTER},
+    {"P0", NATURAL, QUARTER}, // stacatto
+    {"B2", FLAT, QUARTER},
     {"B2", FLAT, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
+    {"B2", FLAT, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
+    {"B2", FLAT, QUARTER},
     {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, HALF},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
+    {"B2", FLAT, QUARTER},
+    {"B2", FLAT, QUARTER},
+    {"B2", FLAT, QUARTER},
+    {"B2", FLAT, HALF},
 };

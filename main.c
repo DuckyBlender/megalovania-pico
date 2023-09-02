@@ -110,7 +110,7 @@ void play_note(Note note, Core core)
         switch (core)
         {
         case CORE_0:
-            gpio_put(15, 1);
+            gpio_put(15, 1); // todo: use PWM for this
             sleep_us(us / 2);
             gpio_put(15, 0);
             sleep_us(us / 2);
@@ -133,6 +133,7 @@ void play_song0()
     {
         play_note(melody_core0[i], CORE_0);
     }
+    multicore_reset_core1();
 }
 
 void play_song1()
@@ -143,17 +144,33 @@ void play_song1()
     }
 }
 
+void play_songs()
+{
+    multicore_launch_core1(play_song1);
+    play_song0(CORE_0);
+}
+
 int main()
 {
     // Setup pins
     const uint CORE0_BUZZER = 15;
     const uint CORE1_BUZZER = 14;
+    const uint RESTART_BUTTON = 16;
     gpio_init(CORE0_BUZZER);
     gpio_init(CORE1_BUZZER);
+    gpio_init(RESTART_BUTTON);
     gpio_set_dir(CORE0_BUZZER, GPIO_OUT);
     gpio_set_dir(CORE1_BUZZER, GPIO_OUT);
+    gpio_set_dir(RESTART_BUTTON, GPIO_IN);
+    gpio_pull_up(RESTART_BUTTON);
 
-    // Play the song on both cores
-    multicore_launch_core1(play_song1);
-    play_song0(CORE_0);
+    play_songs();
+
+    while (true)
+    {
+        if (gpio_get(RESTART_BUTTON))
+        {
+            play_songs();
+        }
+    }
 }
