@@ -6,28 +6,9 @@
 #include <string.h>
 #include <ctype.h> // toupper
 #include "pico/stdlib.h"
+#include "pico/multicore.h"
 
-typedef enum
-{
-    NATURAL,
-    SHARP,
-    FLAT
-} Accidental;
-
-typedef struct Note
-{
-    char *note;
-    Accidental accidental;
-    uint16_t duration;
-} Note;
-
-// Define note durations (in milliseconds)
-#define BPM 120
-#define WHOLE 1000 / (BPM / 60)
-#define HALF 500 / (BPM / 60)
-#define QUARTER 250 / (BPM / 60)
-#define EIGHTH 125 / (BPM / 60)
-#define SIXTEENTH 62.5 / (BPM / 60)
+#include "megalovania.h"
 
 float calculate_frequency(Note note)
 {
@@ -100,108 +81,79 @@ float calculate_frequency(Note note)
     return frequency;
 }
 
-// megalovania
-// Define the melody as an array of notes and durations
-Note melody[] = {
-    {"D4", NATURAL, QUARTER},
-    {"D4", NATURAL, QUARTER},
-    {"D5", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"A4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
-    {"G4", SHARP, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"F4", NATURAL, HALF},
-    {"D4", NATURAL, QUARTER},
-    {"F4", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-
-    {"C4", NATURAL, QUARTER},
-    {"C4", NATURAL, QUARTER},
-    {"D5", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"A4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
-    {"G4", SHARP, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"F4", NATURAL, HALF},
-    {"D4", NATURAL, QUARTER},
-    {"F4", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-
-    {"B3", NATURAL, QUARTER},
-    {"B3", NATURAL, QUARTER},
-    {"D5", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"A4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
-    {"G4", SHARP, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"F4", NATURAL, HALF},
-    {"D4", NATURAL, QUARTER},
-    {"F4", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-
-    {"B3", FLAT, QUARTER},
-    {"B3", FLAT, QUARTER},
-    {"D5", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"A4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER}, // stacatto
-    {"P0", NATURAL, QUARTER}, // pause
-    {"G4", SHARP, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-    {"P0", NATURAL, QUARTER},
-    {"F4", NATURAL, HALF},
-    {"D4", NATURAL, QUARTER},
-    {"F4", NATURAL, QUARTER},
-    {"G4", NATURAL, QUARTER},
-};
-
 // Calculate the total number of notes in the melody
-#define MELODY_LENGTH (sizeof(melody) / sizeof(Note))
+#define CORE0_MELODY_LENGTH (sizeof(melody_core0) / sizeof(Note))
+#define CORE1_MELODY_LENGTH (sizeof(melody_core1) / sizeof(Note))
 
 // Helper function to convert HZ to sleep time in us
 #define hz_to_us(hz) (1000000 / hz)
 
-int main()
+;
+void play_note(Note note, Core core)
 {
-    const uint BUZZER_PIN = 15;
-    gpio_init(BUZZER_PIN);
-    gpio_set_dir(BUZZER_PIN, GPIO_OUT);
-    // Load the melody
-    for (int i = 0; i < MELODY_LENGTH; i++)
+    // Calculate the hz
+    float hz = calculate_frequency(note);
+    // Calculate the duration
+    uint16_t duration = note.duration;
+    // Convert to us sleep time
+    uint16_t us = hz_to_us(hz);
+    // Calculate the number of cycles
+    uint16_t cycles = (hz * duration) / 1000;
+    // Play the note or sleep for the duration of the pause
+    if (hz == 0)
     {
-        // Calculate the hz
-        float hz = calculate_frequency(melody[i]);
-        // Convert to us sleep time
-        uint16_t us = hz_to_us(hz);
-        // Calculate the duration
-        uint16_t duration = melody[i].duration;
-        // Calculate the number of cycles
-        uint16_t cycles = (hz * duration) / 1000;
-        // Play the note or sleep for the duration of the pause
-        if (hz == 0)
+        sleep_ms(duration);
+        return;
+    }
+    for (int i = 0; i < cycles; i++)
+    {
+        switch (core)
         {
-            sleep_ms(duration);
-            continue;
-        }
-        for (int j = 0; j < cycles; j++)
-        {
-            gpio_put(BUZZER_PIN, 1);
+        case CORE_0:
+            gpio_put(15, 1);
             sleep_us(us / 2);
-            gpio_put(BUZZER_PIN, 0);
+            gpio_put(15, 0);
             sleep_us(us / 2);
+            break;
+        case CORE_1:
+            gpio_put(14, 1);
+            sleep_us(us / 2);
+            gpio_put(14, 0);
+            sleep_us(us / 2);
+            break;
+        default:
+            assert(0); // Invalid core
         }
     }
+}
+
+void play_song0()
+{
+    for (int i = 0; i < CORE0_MELODY_LENGTH; i++)
+    {
+        play_note(melody_core0[i], CORE_0);
+    }
+}
+
+void play_song1()
+{
+    for (int i = 0; i < CORE1_MELODY_LENGTH; i++)
+    {
+        play_note(melody_core1[i], CORE_1);
+    }
+}
+
+int main()
+{
+    // Setup pins
+    const uint CORE0_BUZZER = 15;
+    const uint CORE1_BUZZER = 14;
+    gpio_init(CORE0_BUZZER);
+    gpio_init(CORE1_BUZZER);
+    gpio_set_dir(CORE0_BUZZER, GPIO_OUT);
+    gpio_set_dir(CORE1_BUZZER, GPIO_OUT);
+
+    // Play the song on both cores
+    multicore_launch_core1(play_song1);
+    play_song0(CORE_0);
 }
